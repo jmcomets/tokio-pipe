@@ -1,0 +1,10 @@
+[package]
+name = "tokio-pipe"
+version = "0.1.0"
+authors = ["Jean-Marie Comets <jean.marie.comets@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+tokio = "0.1.20"
+error-chain = "0.12.1"
+clap = "2.33.0"
