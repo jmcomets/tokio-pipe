@@ -1,0 +1,22 @@
+#!/bin/bash
+
+set -e
+
+this_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+mode=release
+(cd $this_dir && cargo build --$mode)
+
+$this_dir/target/$mode/tokio-pipe $* > /dev/null &
+pid=$!
+
+i=0
+echo "INDEX %CPU %MEM COMMAND"
+while true; do
+    stat=$(ps -h -o %cpu,%mem,command -p $pid)
+    if [ -z "$stat" ]; then
+        break;
+    fi
+    echo "$(printf '%-5s' $i) $stat"
+    i=$((i + 1));
+done
